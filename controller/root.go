@@ -6,5 +6,5 @@ import (
 )
 
 func Yesrpg() string {
-	return "yes rpg !" + view.Yesrpg()
+	return "yes rpg ! view = " + view.Show()
 }
