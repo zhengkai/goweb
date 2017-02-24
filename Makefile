@@ -1,5 +1,5 @@
 default:
-	go build main.go
+	go build -o goweb main.go && ./goweb
 
 clean:
 	go clean

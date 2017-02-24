@@ -8,19 +8,21 @@ import (
 
 func Show() string {
 
-	tpl, err := template.New(`head.html`).ParseFiles(`tpl/head.html`)
+	tpl, err := template.ParseFiles(`tpl/head.html`)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	noItems := struct {
-		Title string
-	}{
-		Title: "My another page",
-	}
+	/*
+		noItems := struct {
+			Title string
+		}{
+			Title: "My another page",
+		}
+	*/
 
 	buf := new(bytes.Buffer)
-	err = tpl.Execute(buf, noItems)
+	err = tpl.Execute(buf, nil)
 	if err != nil {
 		fmt.Println(err)
 	}

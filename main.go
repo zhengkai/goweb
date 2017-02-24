@@ -1,18 +1,19 @@
 package main
 
 import (
-	"./controller"
+	_ "./handle"
+	"./layout"
 
 	"fmt"
 	"net/http"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hi there, I love %s! "+controller.Yesrpg(), r.URL.Path[1:])
-}
-
 func main() {
-	http.HandleFunc("/", handler)
+
+	layout.Set(`layout`)
+	fmt.Println(layout.Get())
+
+	// http.HandleFunc("/", handler)
 	http.ListenAndServe(":8080", nil)
 }
 
