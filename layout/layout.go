@@ -2,22 +2,21 @@ package layout
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 )
 
-var (
-	layout = `default`
-)
-
-func Set(s string) {
-	layout = s
+type Layout struct {
+	path string
 }
 
-func Get() string {
-	return layout
+func (this *Layout) SetPath(s string) {
+	this.path = s
 }
 
-func Parse() []byte {
+func (this *Layout) Parse() []byte {
+
+	fmt.Println(`this SetTpl =`, this.path)
 
 	buf := new(bytes.Buffer)
 

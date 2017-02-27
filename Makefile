@@ -1,5 +1,9 @@
+SHELL:=/bin/bash
+
 default:
-	go build -o goweb main.go && ./goweb
+	if [ -e /tmp/goweb.sock ]; then rm /tmp/goweb.sock; fi
+	go build -o goweb main.go
+	./goweb
 
 clean:
 	go clean
