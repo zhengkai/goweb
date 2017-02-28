@@ -14,7 +14,7 @@ func (this *Layout) SetPath(s string) {
 	this.path = s
 }
 
-func (this *Layout) Parse() []byte {
+func (this *Layout) Parse() *bytes.Buffer {
 
 	fmt.Println(`this SetTpl =`, this.path)
 
@@ -29,5 +29,5 @@ func (this *Layout) Parse() []byte {
 	tpl, _ = template.ParseFiles(`tpl/foot.html`)
 	tpl.Execute(buf, nil)
 
-	return buf.Bytes()
+	return buf
 }
