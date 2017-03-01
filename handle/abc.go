@@ -1,13 +1,26 @@
 package handle
 
 import (
-// "github.com/zhengkai/goweb/layout"
+	// "fmt"
+	"net/http"
+
+	"github.com/zhengkai/sigo/handle"
 )
 
 type Abc struct {
-	Handle
+	handle.BaseHandle
+}
+
+func (this *Abc) Get(w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]interface{})
+	data[`Foo`] = 123
+	data[`Bar`] = 123
+
+	// fmt.Println(`data`, data)
+
+	this.Data = data
 }
 
 func init() {
-	register(`/abc`, Abc{})
+	handle.Register(`/abc`, &Abc{})
 }
