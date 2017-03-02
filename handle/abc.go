@@ -1,7 +1,7 @@
 package handle
 
 import (
-	// "fmt"
+	"fmt"
 	"net/http"
 
 	"github.com/zhengkai/sigo/handle"
@@ -16,10 +16,17 @@ func (this *Abc) Get(w http.ResponseWriter, r *http.Request) {
 	data[`Foo`] = 123
 	data[`Bar`] = 123
 
-	// fmt.Println(`data`, data)
+	fmt.Println(`data`, data)
 
 	this.Data = data
 }
+
+/*
+func (this *Abc) Clone() handle.Handle {
+	c := *this
+	return &c
+}
+*/
 
 func init() {
 	handle.Register(`/abc`, &Abc{})
