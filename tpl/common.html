@@ -1,0 +1,22 @@
+{{define "head"}}<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>{{.Title}}</title>
+{{range $meta, $_ := ._head.meta}}{{ $meta }}
+{{end}}{{range $css, $_ := ._head.css}}<link rel="stylesheet{{ if HasSuffix $css `.less` }}/less{{end}}" href="{{ $css }}" type="text/css" />
+{{end}}{{range $js, $_ := ._head.js}}<script src="{{ $js }}"></script>
+{{end}}</head>
+<body>
+{{end}}
+
+{{define "nav"}}
+<nav>nav</nav>
+{{end}}
+
+{{define "foot"}}
+<footer>{{ if ._stime }}{{ ._stime }} ms{{ end }}</footer>
+
+</body>
+</html>
+{{end}}

@@ -14,11 +14,9 @@ var socketFile = `/tmp/goweb.sock`
 
 func main() {
 
-	/*
-		go func() {
-			http.ListenAndServe(":8080", nil)
-		}()
-	*/
+	go func() {
+		http.ListenAndServe(":8080", nil)
+	}()
 
 	syscall.Umask(0000)
 	l, err := net.ListenUnix("unix", &net.UnixAddr{socketFile, "unix"})

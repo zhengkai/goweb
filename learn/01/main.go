@@ -4,15 +4,25 @@ import "fmt"
 
 type IF interface {
 	Clone() IF
+	Run()
 }
 
 type Foo struct {
-	i int
+	j int
 }
 
-func (this *Foo) Clone() IF {
-	c := *this
+func (this Foo) Clone() IF {
+	c := this
 	return &c
+}
+
+func (this Foo) Run() {
+	x := &this
+	x.jump(3)
+}
+
+func (this *Foo) jump(i int) {
+	this.j = i
 }
 
 type Bar struct {
@@ -20,13 +30,8 @@ type Bar struct {
 }
 
 func main() {
-	t := &Bar{}
-	c := t.Clone()
-	fmt.Printf(`%T `, t)
-	fmt.Printf(`%T `, c)
-}
-
-func (this *Bar) Clone() IF {
-	c := *this
-	return &c
+	a := Bar{}
+	a.Run()
+	a.jump(4)
+	fmt.Println(a)
 }
