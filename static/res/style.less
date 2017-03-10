@@ -1,0 +1,24 @@
+@foot-height: 5rem;
+
+html {
+	position: relative;
+	min-height: 100%;
+	overflow-y: scroll;
+}
+
+body {
+	padding-bottom: @foot-height + 2rem;
+
+	> nav {
+		background-color: #def;
+	}
+
+	> footer {
+		background-color: #def;
+		height: @foot-height;
+
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+	}
+}

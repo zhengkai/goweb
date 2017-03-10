@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>{{.Title}}</title>
+<title>{{ or ._head.title `Sigo` }}</title>
 {{range ._head.meta}}{{ . }}
 {{end}}{{range ._head.css}}<link rel="stylesheet{{ if HasSuffix . `.less` }}/less{{end}}" href="{{ . }}" type="text/css" />
 {{end}}{{range ._head.js}}<script src="{{ . }}"></script>
@@ -11,11 +11,19 @@
 {{end}}
 
 {{define "nav"}}
-<nav>nav</nav>
+<nav>
+	<div class="container">
+		nav
+	</div>
+</nav>
 {{end}}
 
 {{define "foot"}}
-<footer>{{ if ._stime }}{{ ._stime }} ms{{ end }}</footer>
+<footer>
+	<div class="container">
+	{{ if ._stime }}{{ ._stime }} ms{{ end }}
+	</div>
+</footer>
 
 </body>
 </html>
