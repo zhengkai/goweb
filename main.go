@@ -9,17 +9,19 @@ import (
 	_ "github.com/zhengkai/goweb/handle"
 )
 
-var Abc = `def`
-var socketFile = `/tmp/goweb.sock`
+var (
+	Abc        = `def`
+	socketFile = `/tmp/goweb.sock`
+)
 
 func main() {
 
 	go func() {
-		http.ListenAndServe(":8080", nil)
+		http.ListenAndServe(`:8080`, nil)
 	}()
 
 	syscall.Umask(0000)
-	l, err := net.ListenUnix("unix", &net.UnixAddr{socketFile, "unix"})
+	l, err := net.ListenUnix(`unix`, &net.UnixAddr{socketFile, `unix`})
 	if err != nil {
 		panic(err)
 	}
@@ -29,8 +31,4 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func Test() string {
-	return "Test"
 }

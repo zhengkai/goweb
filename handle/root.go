@@ -1,7 +1,7 @@
 package handle
 
 import (
-	"fmt"
+	// "fmt"
 	"net/http"
 	// "github.com/zhengkai/goweb"
 )
@@ -10,14 +10,10 @@ var (
 	hello = []byte(`hello`)
 )
 
-func root(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.URL.Query())
-	w.Write([]byte(`nothing in /`))
-}
-
 func init() {
 	http.HandleFunc(`/hello`, echo)
-	http.HandleFunc(`/`, root)
+
+	http.Handle(`/`, http.FileServer(http.Dir(`./static`)))
 }
 
 func echo(w http.ResponseWriter, r *http.Request) {
