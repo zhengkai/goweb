@@ -1,4 +1,4 @@
-@foot-height: 5rem;
+@foot-height: 7rem;
 
 html {
 	position: relative;
@@ -11,14 +11,47 @@ body {
 
 	> nav {
 		background-color: #def;
+		h1 {
+			font-family: 'Roboto', sans-serif;
+			font-weight: 400;
+			margin: 0;
+			strong {
+				font-weight: 900;
+			}
+		}
+		padding: 0.5rem 0;
 	}
 
 	> footer {
 		background-color: #def;
 		height: @foot-height;
-
+		font-family: 'Droid Sans Mono', monospace;
 		position: absolute;
 		bottom: 0;
 		width: 100%;
+		padding-top: 1rem;
+
+		p {
+			margin: 0;
+		}
+	}
+
+	> .main {
+		padding-top: 1rem;
+	}
+}
+
+.flex-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: 0;
+	height: 100vw;
+
+	> div {
+		width: 10rem;
+		background-color: red;
+		margin: 1rem;
+		height: 10rem;
 	}
 }

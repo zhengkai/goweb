@@ -13,7 +13,7 @@
 {{define "nav"}}
 <nav>
 	<div class="container">
-		nav
+		<h1><strong>Sigo</strong> Framework</h1>
 	</div>
 </nav>
 {{end}}
@@ -21,7 +21,9 @@
 {{define "foot"}}
 <footer>
 	<div class="container">
-	{{ if ._stime }}{{ ._stime }} ms{{ end }}
+		<p class="pull-right">by zhengkai</p>
+		{{ if ._stime }}<p>time: {{ ._stime }}ms</p>{{ end }}
+		{{ if ._count }}<p>id: #{{ ._count }}</p>{{ end }}
 	</div>
 </footer>
 
