@@ -1,8 +1,6 @@
 package handle
 
 import (
-	"net/http"
-
 	"github.com/zhengkai/sigo/handle"
 )
 
@@ -16,7 +14,7 @@ func (this Index) New() handle.Handle {
 	return &c
 }
 
-func (this *Index) Get(r *http.Request) {
+func (this *Index) Parse() {
 	this.SetUri(`/index`)
 }
 

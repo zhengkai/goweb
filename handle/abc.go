@@ -2,7 +2,6 @@ package handle
 
 import (
 	"fmt"
-	"net/http"
 	"sync/atomic"
 
 	"github.com/zhengkai/goweb/model"
@@ -23,14 +22,14 @@ func (this Abc) New() handle.Handle {
 	return &c
 }
 
-func (this *Abc) Get(r *http.Request) {
+func (this *Abc) Parse() {
 	data := make(map[string]interface{})
 	this.Data = data
 
-	sUser := r.FormValue(`user`)
+	sUser := this.R.FormValue(`user`)
 	fmt.Println(`user`, sUser)
 
-	sPassword := r.FormValue(`password`)
+	sPassword := this.R.FormValue(`password`)
 	fmt.Println(`password`, sPassword)
 
 	data[`Foo`] = atomic.AddInt64(&connectCount, 1)

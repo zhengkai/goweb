@@ -1,8 +1,6 @@
 package handle
 
 import (
-	"net/http"
-
 	"github.com/zhengkai/sigo/handle"
 )
 
@@ -16,7 +14,7 @@ func (this ErrorPage) New() handle.Handle {
 	return &c
 }
 
-func (this *ErrorPage) Get(r *http.Request) {
+func (this *ErrorPage) Parse() {
 	this.Error = `test error`
 	this.ErrorMsg = `error message`
 }
