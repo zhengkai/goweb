@@ -7,6 +7,7 @@ import (
 	"syscall"
 
 	_ "github.com/zhengkai/goweb/handle"
+	_ "github.com/zhengkai/goweb/module"
 )
 
 var (

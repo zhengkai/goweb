@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync/atomic"
 
-	"github.com/zhengkai/goweb/model"
+	"github.com/zhengkai/goweb/module"
 	"github.com/zhengkai/sigo/handle"
 )
 
@@ -35,7 +35,7 @@ func (this *Abc) Parse() {
 	data[`Foo`] = atomic.AddInt64(&connectCount, 1)
 	data[`Bar`] = 123
 
-	uid, err := model.UserCreate(sUser, sPassword)
+	uid, err := module.UserCreate(sUser, sPassword)
 	if err != nil {
 		fmt.Println(`new user error:`, err)
 		return

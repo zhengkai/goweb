@@ -1,4 +1,4 @@
-package model
+package module
 
 import (
 	"errors"
@@ -52,12 +52,12 @@ func UserCreate(name, password string) (id int64, err error) {
 	}
 
 	var i int64
-	if i, _ = result.RowsAffected(); i < int64(1) {
+	if i, _ = result.RowsAffected(); i < 1 {
 		err = errors.New(`duplicate name`)
 		return
 	}
 
-	if i, _ = result.LastInsertId(); i < int64(1) {
+	if i, _ = result.LastInsertId(); i < 1 {
 		err = errors.New(`unknown name`)
 		return
 	}
