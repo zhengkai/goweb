@@ -1,33 +1,38 @@
 <div id="login-form">
-<h2>Login</h2>
-<form action="/passport/login.do" method="POST">
-	<div class="form-group">
-		<label for="inputLoginName">Username</label>
-		<input type="email" class="form-control" id="inputLoginName" aria-describedby="emailHelp" placeholder="Enter username">
-	</div>
-	<div class="form-group">
-		<label for="inputLoginPassword">Password</label>
-		<input type="password" class="form-control" id="inputLoginPassword" placeholder="Password">
-	</div>
-	<p><button class="btn btn-primary" type="submit">Login</button></p>
-</form>
+	<h2>Login</h2>
+	<form action="/passport/login.do" method="POST">
+		<div class="form-group">
+			<label for="inputLoginName">Username</label>
+			<input type="text" class="form-control" name="name" id="inputLoginName" placeholder="Enter username">
+		</div>
+		<div class="form-group">
+			<label for="inputLoginPassword">Password</label>
+			<input type="password" class="form-control" name="password" id="inputLoginPassword" placeholder="Password">
+		</div>
+		<p><button class="btn btn-primary" type="submit">Login</button></p>
+	</form>
 </div>
 
 <div id="register-form">
-<h2>Register</h2>
-<form action="/passport/register.do" method="POST">
-	<div class="form-group">
-		<label for="inputRegisterName">Username</label>
-		<input type="email" class="form-control" id="inputRegisterName" aria-describedby="emailHelp" placeholder="Enter username">
-	</div>
-	<div class="form-group">
-		<label for="inputRegisterPassword1">Password</label>
-		<input type="password" class="form-control" id="inputRegisterPassword1" placeholder="Password">
-	</div>
-	<div class="form-group">
-		<label for="inputRegisterPassword2">Password again</label>
-		<input type="password" class="form-control" id="inputRegisterPassword2" placeholder="Password again">
-	</div>
-	<p><button class="btn btn-primary" type="submit">Register</button></p>
-</form>
+	<h2>Register</h2>
+	<form action="/passport/register.do" method="POST">
+		<div class="form-group">
+			<label for="inputRegisterName">Username</label>
+			<input type="text" class="form-control" name="name" id="inputRegisterName" placeholder="Enter username">
+		</div>
+		<div class="form-group">
+			<label for="inputRegisterPassword1">Password</label>
+			<input type="password" class="form-control" name="password" id="inputRegisterPassword1" placeholder="Password">
+		</div>
+		<div class="form-group">
+			<label for="inputRegisterPassword2">Password again</label>
+			<input type="password" class="form-control" name="password2" id="inputRegisterPassword2" placeholder="Password again">
+		</div>
+		<p><button class="btn btn-primary" type="submit">Register</button></p>
+	</form>
+</div>
+
+<br style="clear: both;" />
+
+<div id="form-alert" class="alert alert-success" role="alert">
 </div>

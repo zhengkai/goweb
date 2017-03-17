@@ -6,12 +6,19 @@ html {
 	overflow-y: scroll;
 }
 
+button {
+	cursor: pointer;
+}
+
 body {
 	padding-bottom: @foot-height + 2rem;
 
 	> nav {
 		background-color: #def;
+		overflow: auto;
+
 		h1 {
+			float: left;
 			a {
 				color: black;
 				&:hover {
@@ -26,6 +33,10 @@ body {
 			}
 		}
 		padding: 0.5rem 0;
+
+		.session-info {
+			float: right;
+		}
 	}
 
 	> footer {
@@ -66,4 +77,8 @@ body {
 	width: 25rem;
 	float: left;
 	padding: 0 8rem 0 0;
+}
+
+#form-alert {
+	display: none;
 }

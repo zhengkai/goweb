@@ -1,6 +1,9 @@
 package handle
 
 import (
+	"net/http"
+
+	"github.com/zhengkai/goweb/module"
 	"github.com/zhengkai/sigo/handle"
 )
 
@@ -16,16 +19,29 @@ func (this PassportLoginDo) New() handle.Handle {
 
 func (this *PassportLoginDo) Parse() {
 	this.ContentType = handle.Json
-
-	aReturn := struct {
-		Success bool   `json:"success"`
-		Uid     int64  `json:"uid,omitempty"`
-		Error   string `json:"error,omitempty"`
-	}{
+	aReturn := LoginJSON{
 		Success: true,
 	}
+	this.Data = &aReturn
 
-	this.Data = aReturn
+	name := this.R.FormValue(`name`)
+	password := this.R.FormValue(`password`)
+
+	user, err := module.UserLogin(name, password)
+	if err != nil {
+		aReturn.Success = false
+		aReturn.Error = err.Error()
+		return
+	}
+
+	s := &module.Session{
+		Uid:     user.Id,
+		Session: 3,
+	}
+	http.SetCookie(this.W, s.MakeCookie())
+
+	aReturn.Success = true
+	aReturn.Uid = user.Id
 }
 
 func init() {

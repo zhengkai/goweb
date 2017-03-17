@@ -11,6 +11,7 @@ type PassportLogin struct {
 func (this PassportLogin) New() handle.Handle {
 	c := this
 	c.Head = new(CommonHead).New()
+	c.Head.AddJS(`/res/login.js`)
 	return &c
 }
 
