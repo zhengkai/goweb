@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd `dirname $0`
+
 (
     flock -x -n 200 || exit 1
 
