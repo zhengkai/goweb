@@ -45,6 +45,9 @@ func (this *Base) Prepare() bool {
 		return true
 	}
 
+	if this.Uri == `/` {
+		return true
+	}
 	if strings.HasPrefix(this.Uri, `/passport`) {
 		return true
 	}
@@ -58,7 +61,7 @@ func (this *Base) Output() {
 		if this.Data == nil {
 			this.Data = make(map[string]interface{})
 		}
-		this.Data.(map[string]interface{})[`_session`] = this.Session.GetUser()
+		this.Data.(map[string]interface{})[`_session`] = this.Session.GetUser().Info()
 	}
 	this.BaseHandle.Output()
 }

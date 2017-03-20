@@ -8,7 +8,13 @@ import (
 )
 
 type User struct {
-	Id int64
+	Id   int64
+	info *UserInfo
+}
+
+type UserInfo struct {
+	Id   int64
+	Name string
 }
 
 func (this *User) Get() (err error) {
@@ -23,6 +29,29 @@ func (this *User) Check() (err error) {
 		return errors.New(`not init`)
 	}
 	return
+}
+
+func (this *User) Info() *UserInfo {
+	if this.info == nil {
+		if this.Id < 1 {
+			return nil
+		}
+
+		info := UserInfo{
+			Id: this.Id,
+		}
+		this.info = &info
+
+		query := `SELECT name FROM user WHERE id = ?`
+		row, err := db.Query(query, this.Id)
+		if err == nil && row.Next() {
+			var name string
+			if err = row.Scan(&name); err == nil {
+				info.Name = name
+			}
+		}
+	}
+	return this.info
 }
 
 func checkLogin(name, password string) error {

@@ -24,8 +24,8 @@ func (this *PassportRegisterDo) Parse() {
 	}
 	this.Data = &aReturn
 
-	name := this.R.FormValue(`name`)
-	password := this.R.FormValue(`password`)
+	name := this.R.PostFormValue(`name`)
+	password := this.R.PostFormValue(`password`)
 
 	user, err := module.UserCreate(name, password)
 	if err != nil {

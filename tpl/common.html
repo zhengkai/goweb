@@ -14,7 +14,16 @@
 <nav>
 	<div class="container">
 		<h1><a href="/"><strong>Sigo</strong> Framework</a></h1>
-		<span class="session-info">{{ ._session.Id }}</span>
+		{{ if ._session.Id }}<div class="session dropdown">
+			<button class="btn btn-secondary dropdown-toggle" type="button" id="nav-profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fa fa-fw fa-user-circle-o" aria-hidden="true"></i> {{ ._session.Name }}
+			</button>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-profile">
+				<a class="dropdown-item" href="/passport/setting.do"><i class="fa fa-fw fa-cogs" aria-hidden="true"></i> Settings</a>
+				<div class="dropdown-divider"></div>
+				<button class="dropdown-item" type="button" onclick="logout()"><i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> Logout</button>
+			</div>
+		</div>{{ else }}<a href="/passport/login" class="session btn btn-secondary"><i class="fa fa-fw fa-sign-in" aria-hidden="true"></i> Login</a>{{ end }}
 	</div>
 </nav>
 {{end}}
