@@ -13,6 +13,8 @@ import (
 var (
 	Abc        = `def`
 	socketFile = `/tmp/goweb.sock`
+	Domain     = ``
+	Salt       = []byte(``)
 )
 
 func main() {

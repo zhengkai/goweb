@@ -23,7 +23,8 @@ type Session struct {
 }
 
 var (
-	salt = `` // TODO 写配置里
+	Salt   = []byte(``)
+	domain = ``
 
 	CookieKey = `tango_sesssion`
 
@@ -32,7 +33,23 @@ var (
 	exampleCookie = `c0150be3447a23ddfbd0be5a8936131037355738be3c0a634cf9a0a713178501,1489645249,123,321`
 
 	cookieExpire = time.Unix(2147483647, 0)
+
+	CookieClean = http.Cookie{
+		Domain:   domain,
+		Name:     CookieKey,
+		Value:    `deleted`,
+		Path:     `/`,
+		Expires:  time.Unix(0, 0),
+		Secure:   true,
+		HttpOnly: true,
+		MaxAge:   -1,
+	}
 )
+
+func SetDomain(s string) {
+	domain = s
+	CookieClean.Domain = s
+}
 
 func (this *Session) GetUser() *User {
 	if this.User == nil {
@@ -51,10 +68,10 @@ func (this *Session) MakeCookie() (c *http.Cookie) {
 	}
 
 	c = &http.Cookie{
+		Domain:   domain,
 		Name:     CookieKey,
 		Value:    fmt.Sprintf(`%x,%d,%d,%d`, hash, time.Unix(), this.Uid, this.Session),
 		Path:     `/`,
-		Domain:   `goweb.funplus.io`, // TODO 写配置里
 		Expires:  cookieExpire,
 		Secure:   true,
 		HttpOnly: true,
@@ -64,10 +81,6 @@ func (this *Session) MakeCookie() (c *http.Cookie) {
 
 func (this *Session) Valid() bool {
 	return this.Uid > 0
-}
-
-func SetSessionSalt(s string) {
-	salt = s
 }
 
 func SessionParse(w http.ResponseWriter, r *http.Request) (s *Session) {
@@ -126,7 +139,7 @@ func SessionMakeHash(uid int64, session int64, time time.Time) []byte {
 	binary.Write(hash, binary.BigEndian, session)
 	binary.Write(hash, binary.BigEndian, time.Unix())
 
-	hash.Write([]byte(salt))
+	hash.Write(Salt)
 
 	return hash.Sum(nil)
 }

@@ -4,16 +4,37 @@ import (
 	// "fmt"
 	// "net/http"
 
-	"bytes"
+	"net/http"
 	"strings"
 
 	"github.com/zhengkai/goweb/module"
 	"github.com/zhengkai/sigo/handle"
 )
 
+var (
+	domain        string
+	refererPrefix string
+)
+
+func SetDomain(s string) {
+	domain = s
+	refererPrefix = `https://` + s
+}
+
 type Base struct {
 	handle.BaseHandle
 	Session *module.Session
+}
+
+func (this *Base) CheckPost() bool {
+	if !this.BaseHandle.CheckPost() {
+		return false
+	}
+	if !strings.HasPrefix(this.R.Header.Get(`Referer`), refererPrefix) {
+		this.StopByStatus(http.StatusNotAcceptable)
+		return false
+	}
+	return true
 }
 
 func (this *Base) Prepare() bool {
@@ -32,12 +53,12 @@ func (this *Base) Prepare() bool {
 	return false
 }
 
-func (this *Base) Output() *bytes.Buffer {
+func (this *Base) Output() {
 	if this.ContentType == handle.Html && this.Session != nil {
 		if this.Data == nil {
 			this.Data = make(map[string]interface{})
 		}
 		this.Data.(map[string]interface{})[`_session`] = this.Session.GetUser()
 	}
-	return this.BaseHandle.Output()
+	this.BaseHandle.Output()
 }
