@@ -1,6 +1,10 @@
 package handle
 
-import "github.com/zhengkai/sigo/handle"
+import (
+	"net/http"
+
+	"github.com/zhengkai/sigo/handle"
+)
 
 type Index struct {
 	Base
@@ -15,6 +19,7 @@ func (this Index) New() handle.Handle {
 func (this *Index) Parse() {
 	uri := this.R.URL.RequestURI()
 	if uri != `/` {
+		this.W.WriteHeader(http.StatusNotFound)
 		this.Uri = `/error/404`
 		e := make(map[string]string)
 		this.Data = make(map[string]interface{})
