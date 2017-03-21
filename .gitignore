@@ -1,6 +1,8 @@
 /main
 /goweb
 /config.ini
+/spider/spider
+/spider/proList.xml
 
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
