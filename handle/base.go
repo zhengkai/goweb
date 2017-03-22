@@ -45,6 +45,8 @@ func (this *Base) Prepare() bool {
 		return true
 	}
 
+	return true // 暂时允许所有非登录
+
 	if this.Uri == `/` {
 		return true
 	}

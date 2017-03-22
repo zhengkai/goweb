@@ -1,0 +1,19 @@
+<table class="table tablesorter tablesorter-materialize" style="width: auto;">
+	<thead>
+		<tr>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">name</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">name</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">name</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">name</div></th>
+		</tr>
+	</thead>
+	<tbody>
+{{ range .vehicle }}	<tr>
+		<td>{{ .Name }}</td>
+		<td>{{ (index $.nation .Nation).Short }}</td>
+		<td>{{ .Tier }}</td>
+		<td>{{ (index $.vehicle_type .Type).Short }}</td>
+	</tr>
+{{ end }}
+	</tbody>
+</table>

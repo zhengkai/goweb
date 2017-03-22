@@ -9,7 +9,7 @@ $(document).ready(function() {
 		parseForm($(this));
 		return false;
 	});
-})
+});
 
 function parseForm(oForm) {
 	var oAlert = $('#form-alert')
