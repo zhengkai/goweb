@@ -32,6 +32,10 @@ func (this *Abc) Parse() {
 	sPassword := this.R.FormValue(`password`)
 	fmt.Println(`password`, sPassword)
 
+	this.SetTplFunc(`yesrpg`, func(s string) string {
+		return `yes!` + s + `!rpg!`
+	})
+
 	data[`Foo`] = atomic.AddInt64(&connectCount, 1)
 	data[`Bar`] = 123
 
