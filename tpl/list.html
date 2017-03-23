@@ -2,9 +2,16 @@
 	<thead>
 		<tr>
 			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">name</div></th>
-			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">name</div></th>
-			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">name</div></th>
-			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">name</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">nation</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">tier</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">type</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">1环</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">2环</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">3环</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">3级</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">2级</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">1级</div></th>
+			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">特级</div></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -13,6 +20,13 @@
 		<td>{{ (index $.nation .Nation).Short }}</td>
 		<td>{{ .Tier }}</td>
 		<td>{{ (index $.vehicle_type .Type).Short }}</td>
+		<td>{{ (index $.score .Id).G1min }}</td>
+		<td>{{ (index $.score .Id).G2min }}</td>
+		<td>{{ (index $.score .Id).G3min }}</td>
+		<td>{{ (index $.score .Id).M1min }}</td>
+		<td>{{ (index $.score .Id).M2min }}</td>
+		<td>{{ (index $.score .Id).M3min }}</td>
+		<td>{{ (index $.score .Id).M4min }}</td>
 	</tr>
 {{ end }}
 	</tbody>

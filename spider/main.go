@@ -11,4 +11,5 @@ func main() {
 	// updateInfo()
 	// getList()
 	import_vehicle()
+	import_score_all()
 }

@@ -7,13 +7,13 @@ import (
 	"time"
 
 	simplejson "github.com/bitly/go-simplejson"
-
 	"github.com/zhengkai/goweb/typelist"
 )
 
 func import_vehicle() {
 	var b []byte
-	b = getFile(`vehicles.json`)
+	// b = getFile(`vehicles.json`)
+	b = getHtml(`https://api.worldoftanks.ru/wot/encyclopedia/vehicles/?application_id=demo&language=zh-cn`)
 	fmt.Println(string(b[:100]))
 
 	data, err := simplejson.NewJson(b)
@@ -34,7 +34,7 @@ func import_vehicle() {
 		tier, _ := row[`tier`].(json.Number).Int64()
 		stype := row[`type`].(string)
 		nation := row[`nation`].(string)
-		fmt.Println(id, name, is_premium, tier, stype, nation)
+		// fmt.Println(id, name, is_premium, tier, stype, nation)
 
 		iType := 0
 		if val, ok := typelist.VehicleTypeSearch[stype]; ok {
