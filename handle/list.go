@@ -2,6 +2,7 @@ package handle
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/zhengkai/goweb/typelist"
 	"github.com/zhengkai/sigo/handle"
@@ -40,6 +41,13 @@ func (this *List) Parse() {
 		fmt.Println(err)
 		return
 	}
+
+	this.SetTplFunc(`show_score`, func(i int) string {
+		if i <= 0 || i >= 9999 {
+			return ``
+		}
+		return strconv.Itoa(i)
+	})
 
 	vehicle := make(map[int]*VehicleRow)
 	data[`vehicle`] = vehicle

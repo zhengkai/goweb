@@ -1,3 +1,4 @@
+{{ define "main" }}
 <table class="table tablesorter tablesorter-materialize" style="width: auto;">
 	<thead>
 		<tr>
@@ -20,14 +21,15 @@
 		<td>{{ (index $.nation .Nation).Short }}</td>
 		<td>{{ .Tier }}</td>
 		<td>{{ (index $.vehicle_type .Type).Short }}</td>
-		<td>{{ (index $.score .Id).G1min }}</td>
-		<td>{{ (index $.score .Id).G2min }}</td>
-		<td>{{ (index $.score .Id).G3min }}</td>
-		<td>{{ (index $.score .Id).M1min }}</td>
-		<td>{{ (index $.score .Id).M2min }}</td>
-		<td>{{ (index $.score .Id).M3min }}</td>
-		<td>{{ (index $.score .Id).M4min }}</td>
+		<td>{{ show_score (index $.score .Id).G1min }}</td>
+		<td>{{ show_score (index $.score .Id).G2min }}</td>
+		<td>{{ show_score (index $.score .Id).G3min }}</td>
+		<td>{{ show_score (index $.score .Id).M1min }}</td>
+		<td>{{ show_score (index $.score .Id).M2min }}</td>
+		<td>{{ show_score (index $.score .Id).M3min }}</td>
+		<td>{{ show_score (index $.score .Id).M4min }}</td>
 	</tr>
 {{ end }}
 	</tbody>
 </table>
+{{ end }}
