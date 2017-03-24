@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>{{ or ._head.title `Sigo` }}</title>
+<title>{{ or ._head.title `WOT Tank List` }}</title>
 {{range ._head.meta}}{{ . }}
 {{end}}{{range ._head.css}}<link rel="stylesheet{{ if HasSuffix . `.less` }}/less{{end}}" href="{{ . }}" type="text/css" />
 {{end}}{{range ._head.js}}<script src="{{ . }}"></script>
@@ -13,7 +13,7 @@
 {{define "nav"}}
 <nav>
 	<div class="container">
-		<h1><a href="/"><strong>Sigo</strong> Framework</a></h1>
+		<h1><a href="/">WOT Tank List</a></h1>
 		{{ if ._session.Id }}<div class="session dropdown">
 			<button class="btn btn-secondary dropdown-toggle" type="button" id="nav-profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i class="fa fa-fw fa-user-circle-o" aria-hidden="true"></i> {{ ._session.Name }}

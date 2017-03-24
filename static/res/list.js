@@ -4,19 +4,45 @@ $(document).ready(function() {
 	$('#filterBox > button').click(reset_filter);
 });
 
-var filter = {
+var filterDefault = {
 	type: {},
 	nation: {},
 	tier: {}
 };
 
-var filterDefault = $.extend(true, {}, filter);
+var pQuery = new RegExp('^(\\d*),(\\d*),([\\da]*)');
+
+var filter = $.extend(true, {}, filterDefault);
+(function() {
+	var s = window.location.search
+	if (!s) {
+		return
+	}
+	s = s.substr(1);
+
+	var match = pQuery.exec(s);
+	if (match) {
+		var fill = function(s) {
+			var r = {}
+			for (var i = 0, j = s.length; i < j; i++) {
+				var v = s[i];
+				if (v == 'a') {
+					v = 10;
+				}
+				r[v] = true;
+			}
+			return r;
+		}
+		filter.type = fill(match[1])
+		filter.nation = fill(match[2])
+		filter.tier = fill(match[3])
+	}
+})();
 
 function do_filter() {
-	var type = $(this).data('type');
-	var i = $(this).data('value') - 0;
-
-	list = filter[type];
+	var o = $(this);
+	var i = o.data('value') - 0;
+	var list = filter[o.data('type')];
 	if (i in list) {
 		delete list[i];
 	} else {
@@ -30,7 +56,33 @@ function reset_filter() {
 	_do_filter();
 }
 
+var filterOrder = ['type', 'nation', 'tier'];
+function buildUrl() {
+	var q = [];
+	var bSearch = false;
+	for (var k in filterOrder) {
+		var s = '';
+		var row = filter[filterOrder[k]];
+		if (!$.isEmptyObject(row)) {
+			s = Object.keys(row).map(function(v) {
+				return v > 9 ? 'a' : v;
+			}).sort().join('');
+			bSearch = true;
+		}
+		q.push(s);
+	}
+	var s = bSearch ? '?' + q.join(',') : '';
+	if (window.location.search == s) {
+		return;
+	}
+	window.history.pushState({}, 0, window.location.pathname + s);
+}
+
 function _do_filter() {
+
+	buildUrl();
+	//window.history.pushState({}, 0, '/');
+
 	$('#filterBox button').each(function() {
 
 		var o = $(this)

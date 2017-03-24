@@ -19,6 +19,6 @@ func (this CommonHead) New() handle.Head {
 	c.AddCSS(`/res/tether-1.3.3/css/tether.min.css`)
 	c.AddCSS(`/res/font-awesome-4.7.0/css/font-awesome.min.css`)
 	c.AddCSS(`/res/style.less`)
-	c.AddCSS(`https://fonts.googleapis.com/css?family=Droid+Sans+Mono|Droid+Sans:400,700|Roboto:400,900`)
+	// c.AddCSS(`https://fonts.googleapis.com/css?family=Droid+Sans+Mono|Droid+Sans:400,700|Roboto:400,900`)
 	return c
 }

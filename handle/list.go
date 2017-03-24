@@ -2,10 +2,15 @@ package handle
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 
 	"github.com/zhengkai/goweb/typelist"
 	"github.com/zhengkai/sigo/handle"
+)
+
+var (
+	pGet, _ = regexp.Compile(`^(\d*),(\d*),([\da]*)`)
 )
 
 type VehicleRow struct {
@@ -15,6 +20,13 @@ type VehicleRow struct {
 	Type      int
 	Nation    int
 	Name      string
+	Show      bool
+}
+
+type ListQuery struct {
+	Type   []int
+	Nation []int
+	Tier   []int
 }
 
 type List struct {
@@ -27,20 +39,67 @@ func (this List) New() handle.Handle {
 	c.Head.AddJS(`/res/tablesorter-2.28.5/js/jquery.tablesorter.min.js`)
 	c.Head.AddJS(`/res/list.js`)
 	c.Head.AddCSS(`/res/tablesorter-2.28.5/css/theme.materialize.min.css`)
+	c.SetTplFunc(`show_score`, func(i int) string {
+		if i <= 0 || i >= 9999 {
+			return ``
+		}
+		s := strconv.Itoa(i)
+		if i > 999 {
+			s = s[0:1] + `,` + s[1:4]
+		}
+		return s
+	})
+	c.SetTplFunc(`in_array`, func(i int, j []int) bool {
+		if j == nil {
+			return false
+		}
+		for _, v := range j {
+			if i == v {
+				return true
+			}
+		}
+		return false
+	})
 	return &c
+}
+
+func (this *List) ParseGet() (q *ListQuery) {
+
+	q = new(ListQuery)
+
+	get := this.R.URL.RawQuery
+	if len(get) < 1 {
+		return
+	}
+
+	r := pGet.FindStringSubmatch(get)
+
+	var conv = func(in string) (q []int) {
+		for _, b := range in {
+			var n int
+			if b == 'a' {
+				n = 10
+			} else {
+				n = int(b - '0')
+			}
+			q = append(q, n)
+		}
+		return q
+	}
+
+	q.Type = conv(r[1])
+	q.Nation = conv(r[2])
+	q.Tier = conv(r[3])
+	return
 }
 
 func (this *List) Parse() {
 
-	this.SetTplFunc(`show_score`, func(i int) string {
-		if i <= 0 || i >= 9999 {
-			return ``
-		}
-		return strconv.Itoa(i)
-	})
-
 	data := make(map[string]interface{})
 	this.Data = data
+
+	lq := this.ParseGet()
+	data[`listQuery`] = lq
 
 	query := `SELECT id, is_premium, tier, type, nation, name FROM vehicle`
 	row, err := db.Query(query)
@@ -54,6 +113,34 @@ func (this *List) Parse() {
 
 	vehicle_id := make(map[int]bool)
 
+	inCheck := func(a int, b []int) bool {
+		if len(b) < 1 {
+			return true
+		}
+		for _, v := range b {
+			if v == a {
+				return true
+			}
+		}
+		return false
+	}
+
+	checkShow := func(v *VehicleRow) bool {
+		if lq == nil {
+			return true
+		}
+		if !inCheck(v.Type, lq.Type) {
+			return false
+		}
+		if !inCheck(v.Nation, lq.Nation) {
+			return false
+		}
+		if !inCheck(v.Tier, lq.Tier) {
+			return false
+		}
+		return true
+	}
+
 	for row.Next() {
 		v := new(VehicleRow)
 		err = row.Scan(&v.Id, &v.IsPremium, &v.Tier, &v.Type, &v.Nation, &v.Name)
@@ -63,6 +150,7 @@ func (this *List) Parse() {
 		if v.Tier < 7 {
 			continue
 		}
+		v.Show = checkShow(v)
 		vehicle[v.Id] = v
 		vehicle_id[v.Id] = true
 	}
