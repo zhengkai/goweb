@@ -1,4 +1,25 @@
 {{ define "main" }}
+
+<div id="filterBox" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+	<div class="btn-group mr-2" role="group" aria-label="Third group">
+		{{ range .tier }}
+		<button type="button" data-type="tier" data-value="{{ . }}" class="btn btn-outline-primary">{{ . }}</button>
+		{{ end }}
+	</div>
+	<div class="btn-group mr-2" role="group" aria-label="First group">
+		{{ range $i, $_ := .vehicle_type }}
+		<button type="button" data-type="type" data-value="{{ $i }}" class="btn btn-outline-primary">{{ .Short }}</button>
+		{{ end }}
+	</div>
+	<div class="btn-group mr-2" role="group" aria-label="Second group">
+		{{ range $i, $_ := .nation }}
+		<button type="button" data-type="nation" data-value="{{ $i }}" class="btn btn-outline-primary">{{ .Short }}</button>
+		{{ end }}
+	</div>
+
+	<button class="btn btn-outline-primary">reset filter</button>
+</div>
+
 <table class="table tablesorter tablesorter-materialize" style="width: auto;">
 	<thead>
 		<tr>
@@ -15,8 +36,8 @@
 			<th class="tablesorter-header tablesorter-headerUnSorted"><div class="tablesorter-header-inner">特级</div></th>
 		</tr>
 	</thead>
-	<tbody>
-{{ range .vehicle }}	<tr>
+	<tbody id="tankList">
+{{ range .vehicle }}	<tr data-nation="{{ .Nation }}" data-type="{{ .Type }}" data-tier="{{ .Tier }}">
 		<td>{{ .Name }}</td>
 		<td>{{ (index $.nation .Nation).Short }}</td>
 		<td>{{ .Tier }}</td>

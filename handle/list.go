@@ -32,6 +32,13 @@ func (this List) New() handle.Handle {
 
 func (this *List) Parse() {
 
+	this.SetTplFunc(`show_score`, func(i int) string {
+		if i <= 0 || i >= 9999 {
+			return ``
+		}
+		return strconv.Itoa(i)
+	})
+
 	data := make(map[string]interface{})
 	this.Data = data
 
@@ -42,13 +49,6 @@ func (this *List) Parse() {
 		return
 	}
 
-	this.SetTplFunc(`show_score`, func(i int) string {
-		if i <= 0 || i >= 9999 {
-			return ``
-		}
-		return strconv.Itoa(i)
-	})
-
 	vehicle := make(map[int]*VehicleRow)
 	data[`vehicle`] = vehicle
 
@@ -58,6 +58,9 @@ func (this *List) Parse() {
 		v := new(VehicleRow)
 		err = row.Scan(&v.Id, &v.IsPremium, &v.Tier, &v.Type, &v.Nation, &v.Name)
 		if err != nil {
+			continue
+		}
+		if v.Tier < 7 {
 			continue
 		}
 		vehicle[v.Id] = v
@@ -102,6 +105,8 @@ func (this *List) Parse() {
 
 	data[`vehicle_type`] = typelist.VehicleType
 	data[`nation`] = typelist.Nation
+
+	data[`tier`] = [...]int{7, 8, 9, 10}
 }
 
 func init() {
