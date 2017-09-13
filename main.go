@@ -12,7 +12,7 @@ import (
 
 var (
 	Abc        = `def`
-	socketFile = `/tmp/goweb.sock`
+	socketFile = `/tmp/wot.sock`
 	Domain     = ``
 	Salt       = []byte(``)
 )

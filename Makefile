@@ -7,3 +7,6 @@ default:
 
 clean:
 	go clean
+
+wot:
+	go build -o wot main.go config.go
