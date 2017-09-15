@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	pGet, _ = regexp.Compile(`^(\d*),(\d*),([\da]*)`)
+	pGet, _ = regexp.Compile(`^(\d*)(,|.)(\d*)(,|.)([\dax]*)`)
 )
 
 type VehicleRow struct {
@@ -73,11 +73,14 @@ func (this *List) ParseGet() (q *ListQuery) {
 	}
 
 	r := pGet.FindStringSubmatch(get)
+	if r == nil {
+		return
+	}
 
 	var conv = func(in string) (q []int) {
 		for _, b := range in {
 			var n int
-			if b == 'a' {
+			if b == 'a' || b == 'x' {
 				n = 10
 			} else {
 				n = int(b - '0')
@@ -88,8 +91,8 @@ func (this *List) ParseGet() (q *ListQuery) {
 	}
 
 	q.Type = conv(r[1])
-	q.Nation = conv(r[2])
-	q.Tier = conv(r[3])
+	q.Nation = conv(r[3])
+	q.Tier = conv(r[5])
 	return
 }
 

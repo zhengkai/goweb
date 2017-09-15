@@ -10,6 +10,7 @@ func main() {
 	// getInfo()
 	// updateInfo()
 	// getList()
-	import_vehicle()
-	import_score_all()
+	import_xvm()
+	// import_vehicle()
+	// import_score_all()
 }

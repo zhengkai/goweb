@@ -1,16 +1,62 @@
-$(document).ready(function() {
-	$('table.tablesorter').tablesorter();
-	$('#filterBox div button').click(do_filter);
-	$('#filterBox > button').click(reset_filter);
-});
-
+var sortColumn = {index: -1, asc: true}
 var filterDefault = {
 	type: {},
 	nation: {},
 	tier: {}
 };
 
-var pQuery = new RegExp('^(\\d*),(\\d*),([\\da]*)');
+$(document).ready(function() {
+	var o = $('table.tablesorter');
+	o.tablesorter({
+		sortInitialOrder: 'desc',
+		sortMultiSortKey: 'none'
+	});
+	$('#filterBox div button').click(do_filter);
+	$('#filterBox > button').click(reset_filter);
+	initSort();
+	o.bind('sortEnd', sortUpdate);
+});
+
+function initSort() {
+	var hash = window.location.hash;
+	if (hash.length < 2) {
+		return;
+	}
+	hash = hash.substring(1);
+	var index = parseInt(hash)|0;
+	if (index < 0) {
+		return;
+	}
+	sortColumn.index = index;
+	sortColumn.asc = hash.substr(-1) === 'a';
+
+	var o = $('table.tablesorter th[data-column=' + index + ']');
+	o.click();
+	if (sortColumn.asc) {
+		o.click();
+	}
+}
+
+function sortUpdate() {
+	var l = $('table th').toArray();
+	var found = false;
+	for (var i in l) {
+		var o = $(l[i]);
+		var s = o.attr('aria-sort');
+		if (s !== 'none') {
+			found = true;
+			sortColumn.index = i;
+			sortColumn.asc = (s === 'ascending');
+			break;
+		}
+	}
+	if (!found) {
+		sortColumn.index = -1;
+	}
+	buildUrl();
+}
+
+var pQuery = new RegExp('^(\\d*)(,|.)(\\d*)(,|.)([\\da]*)');
 
 var filter = $.extend(true, {}, filterDefault);
 (function() {
@@ -26,7 +72,7 @@ var filter = $.extend(true, {}, filterDefault);
 			var r = {}
 			for (var i = 0, j = s.length; i < j; i++) {
 				var v = s[i];
-				if (v == 'a') {
+				if (v == 'a' || v == 'x') {
 					v = 10;
 				}
 				r[v] = true;
@@ -34,8 +80,8 @@ var filter = $.extend(true, {}, filterDefault);
 			return r;
 		}
 		filter.type = fill(match[1])
-		filter.nation = fill(match[2])
-		filter.tier = fill(match[3])
+		filter.nation = fill(match[3])
+		filter.tier = fill(match[5])
 	}
 })();
 
@@ -65,13 +111,16 @@ function buildUrl() {
 		var row = filter[filterOrder[k]];
 		if (!$.isEmptyObject(row)) {
 			s = Object.keys(row).map(function(v) {
-				return v > 9 ? 'a' : v;
+				return v > 9 ? 'x' : v;
 			}).sort().join('');
 			bSearch = true;
 		}
 		q.push(s);
 	}
-	var s = bSearch ? '?' + q.join(',') : '';
+	var s = bSearch ? '?' + q.join('.') : '';
+	if (sortColumn.index >= 0) {
+		s += '#' + sortColumn.index + (sortColumn.asc ? 'a' : '');
+	}
 	if (window.location.search == s) {
 		return;
 	}
