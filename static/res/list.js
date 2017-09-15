@@ -56,7 +56,7 @@ function sortUpdate() {
 	buildUrl();
 }
 
-var pQuery = new RegExp('^(\\d*)(,|.)(\\d*)(,|.)([\\da]*)');
+var pQuery = new RegExp('^(\\d*)(,|.)(\\d*)(,|.)([\\dax]*)');
 
 var filter = $.extend(true, {}, filterDefault);
 (function() {
